@@ -14,6 +14,7 @@
   "mixins": [
     "BucketItemMixin",
     "ServerPlayerGameModeMixin",
+    "block.AbstractBlockStateMixin",
     "block.BlockBehaviourMixin",
     "block.BlocksMixin",
     "block.FireBlockMixin",
