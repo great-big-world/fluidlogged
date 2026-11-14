@@ -9,7 +9,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.LevelReader;
-import net.minecraft.world.level.LightLayer;
 import net.minecraft.world.level.ScheduledTickAccess;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.StairBlock;
@@ -71,8 +70,6 @@ public abstract class StairsBlockMixin extends Block {
 
     @Override
     protected void randomTick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
-        if (level.getBrightness(LightLayer.BLOCK, pos) > 11 - state.getLightDampening()) {
-            Fluidloggable.melt(state, level, pos);
-        }
+        Fluidloggable.melt(state, level, pos);
     }
 }

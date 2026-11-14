@@ -6,6 +6,7 @@ import dev.creoii.greatbigworld.fluidlogged.util.FluidType;
 import dev.creoii.greatbigworld.fluidlogged.util.Fluidloggable;
 import dev.creoii.greatbigworld.fluidlogged.util.OverlayState;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.LivingEntity;
@@ -77,6 +78,11 @@ public abstract class CoreFluidloggedMixin extends Block implements OverlayState
         if (state.getValue(Fluidloggable.FLUIDLOGGED) == FluidType.ICE) {
             cir.setReturnValue(Shapes.block());
         }
+    }
+
+    @Override
+    protected boolean skipRendering(final BlockState state, final BlockState neighborState, final Direction direction) {
+        return neighborState.is(Blocks.ICE) || (neighborState.hasProperty(Fluidloggable.FLUIDLOGGED) && neighborState.getValue(Fluidloggable.FLUIDLOGGED) == FluidType.ICE) || super.skipRendering(state, neighborState, direction);
     }
 
     @Override

@@ -9,6 +9,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.LightLayer;
 import net.minecraft.world.level.block.BucketPickup;
 import net.minecraft.world.level.block.LiquidBlockContainer;
 import net.minecraft.world.level.block.state.BlockState;
@@ -50,14 +51,20 @@ public interface Fluidloggable extends BucketPickup, LiquidBlockContainer {
         return defaultGetPickupSound();
     }
 
-    static void melt(final BlockState state, final Level level, final BlockPos pos) {
+    static boolean canMelt(BlockState state, Level level, BlockPos pos) {
+        return state.getValue(Fluidloggable.FLUIDLOGGED) == FluidType.ICE && level.getBrightness(LightLayer.BLOCK, pos) > 11 - state.getLightDampening();
+    }
+
+    static void melt(BlockState state, Level level, BlockPos pos) {
+        if (!canMelt(state, level, pos)) return;
+
         if (level.environmentAttributes().getValue(EnvironmentAttributes.WATER_EVAPORATES, pos)) {
             level.setBlockAndUpdate(pos, state.setValue(FLUIDLOGGED, FluidType.EMPTY));
         } else {
             BlockState melted = getMeltedState(state);
             level.setBlockAndUpdate(pos, melted);
-            level.neighborChanged(pos,melted.getBlock(), null);
-            level.gameEvent(GameEvent.BLOCK_DESTROY, pos, GameEvent.Context.of(state));
+            level.neighborChanged(pos, melted.getBlock(), null);
+            level.gameEvent(GameEvent.BLOCK_CHANGE, pos, GameEvent.Context.of(state));
         }
     }
 

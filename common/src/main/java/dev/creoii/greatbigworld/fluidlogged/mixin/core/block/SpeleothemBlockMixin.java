@@ -78,9 +78,7 @@ public abstract class SpeleothemBlockMixin extends Block {
 
     @Inject(method = "randomTick", at = @At("TAIL"))
     private void gbw$handleIceMelt(BlockState state, ServerLevel level, BlockPos pos, RandomSource random, CallbackInfo ci) {
-        if (level.getBrightness(LightLayer.BLOCK, pos) > 11 - state.getLightDampening()) {
-            Fluidloggable.melt(state, level, pos);
-        }
+        Fluidloggable.melt(state, level, pos);
     }
 
     @WrapOperation(method = "createSpeleothem", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/block/state/BlockState;setValue(Lnet/minecraft/world/level/block/state/properties/Property;Ljava/lang/Comparable;)Ljava/lang/Object;", ordinal = 2))

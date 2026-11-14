@@ -12,10 +12,12 @@
     "client.SectionBuilderMixin"
   ],
   "mixins": [
+    "BucketItemMixin",
     "ServerPlayerGameModeMixin",
     "block.BlockBehaviourMixin",
     "block.BlocksMixin",
     "block.FireBlockMixin",
+    "block.IceBlockMixin",
     "block.LilyPadBlockMixin",
     "block.SnowLayerBlockMixin",
     "client.compat.sodium.ChunkBuilderMeshingTaskMixin",
