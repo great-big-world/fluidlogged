@@ -1,0 +1,39 @@
+modLoader = "javafml"
+loaderVersion = "[2,)"
+#issueTrackerURL = ""
+license = "All Rights Reserved"
+
+[[mods]]
+modId = "fluidlogged"
+version = "${version}"
+displayName = "Fluidlogged"
+authors = "creoii"
+description = '''
+Lavalogging & icelogging
+'''
+displayURL="https://greatbigworld.creoii.dev"
+#iconFile = ""
+
+[[dependencies.fluidlogged]]
+modId = "neoforge"
+type = "required"
+versionRange = "[26,)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.fluidlogged]]
+modId = "minecraft"
+type = "required"
+versionRange = "[26.3,)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.fluidlogged]]
+modId = "mixinextras"
+type = "required"
+versionRange = "[0.5.0-beta.1,)"
+ordering = "NONE"
+side = "BOTH"
+
+[[mixins]]
+config = "fluidlogged.mixins.json"

@@ -1,0 +1,43 @@
+{
+  "required": true,
+  "package": "dev.creoii.greatbigworld.fluidlogged.mixin",
+  "plugin": "dev.creoii.greatbigworld.fluidlogged.FluidloggedMixinPlugin",
+  "compatibilityLevel": "JAVA_25",
+  "minVersion": "0.8",
+  "mixinextras": {
+    "minVersion": "0.5.0-beta.1"
+  },
+  "client": [
+    "client.LevelEventHandlerMixin",
+    "client.SectionBuilderMixin"
+  ],
+  "mixins": [
+    "ServerPlayerGameModeMixin",
+    "block.BlockBehaviourMixin",
+    "block.BlocksMixin",
+    "block.FireBlockMixin",
+    "block.LilyPadBlockMixin",
+    "block.SnowLayerBlockMixin",
+    "client.compat.sodium.ChunkBuilderMeshingTaskMixin",
+    "core.block.CoreFluidloggedMixin",
+    "core.block.SlabBlockMixin",
+    "core.block.SpeleothemBlockMixin",
+    "core.block.StairsBlockMixin",
+    "core.block.WallBlockMixin",
+    "entity.BeeMixin",
+    "entity.LivingEntityMixin",
+    "entity.PlayerMixin",
+    "entity.PolarBearMixin",
+    "level.BiomeMixin",
+    "level.FoliagePlacerMixin",
+    "level.GeodeFeatureMixin",
+    "level.PistonMovingBlockEntityMixin",
+    "level.RootPlacerMixin",
+    "level.ServerLevelMixin",
+    "level.SpeleothemUtilsMixin",
+    "level.WaterloggedVegetationPatchFeatureMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

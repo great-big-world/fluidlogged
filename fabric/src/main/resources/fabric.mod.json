@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "id": "fluidlogged",
+  "version": "${version}",
+  "name": "Fluidlogged",
+  "description": "Lavalogging & icelogging",
+  "authors": ["creoii"],
+  "contact": {
+    "homepage": "https://greatbigworld.creoii.dev"
+  },
+  "license": "All-Rights-Reserved",
+  "icon": "assets/fluidlogged/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "dev.creoii.greatbigworld.fluidlogged.fabric.FluidloggedFabric"
+    ]
+  },
+  "mixins": [
+    "fluidlogged.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.19.5",
+    "minecraft": "~26.3",
+    "java": ">=25",
+    "mixinextras": ">=0.5.0-beta.1"
+  }
+}
