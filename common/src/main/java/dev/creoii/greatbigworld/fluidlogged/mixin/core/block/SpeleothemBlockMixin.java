@@ -42,10 +42,10 @@ public abstract class SpeleothemBlockMixin extends Block {
     }
 
     @WrapOperation(method = "updateShape", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/ScheduledTickAccess;scheduleTick(Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/material/Fluid;I)V", ordinal = 0))
-    private void gbw$fixFluidloggableScheduleTick(ScheduledTickAccess instance, BlockPos blockPos, Fluid fluid, int i, Operation<Void> original, @Local(argsOnly = true, name = "state") BlockState blockState, @Local(argsOnly = true, name = "level") LevelReader levelReader) {
+    private void gbw$fixFluidloggableScheduleTick(ScheduledTickAccess instance, BlockPos pos, Fluid type, int tickDelay, Operation<Void> original, @Local(argsOnly = true, name = "state") BlockState blockState, @Local(argsOnly = true, name = "level") LevelReader levelReader) {
         FluidType fluidType = blockState.getValue(Fluidloggable.FLUIDLOGGED);
         if (fluidType.isLiquid())
-            original.call(instance, blockPos, fluidType.getFluid(), fluidType.getFluid().getTickDelay(levelReader));
+            original.call(instance, pos, fluidType.getFluid(), fluidType.getFluid().getTickDelay(levelReader));
     }
 
     @WrapOperation(method = "getFluidState", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/block/state/BlockState;getValue(Lnet/minecraft/world/level/block/state/properties/Property;)Ljava/lang/Comparable;"))
@@ -54,8 +54,8 @@ public abstract class SpeleothemBlockMixin extends Block {
     }
 
     @WrapOperation(method = "getFluidState", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/block/Block;getFluidState(Lnet/minecraft/world/level/block/state/BlockState;)Lnet/minecraft/world/level/material/FluidState;"))
-    private FluidState gbw$fixFluidloggableFluidState(SpeleothemBlock instance, BlockState blockState, Operation<FluidState> original) {
-        FluidType fluidType = blockState.getValue(Fluidloggable.FLUIDLOGGED);
+    private FluidState gbw$fixFluidloggableFluidState(SpeleothemBlock instance, BlockState state, Operation<FluidState> original) {
+        FluidType fluidType = state.getValue(Fluidloggable.FLUIDLOGGED);
         if (fluidType.isLiquid() && fluidType.getFluid() instanceof FlowingFluid flowableFluid) {
             return flowableFluid.getSource(false);
         }

@@ -37,7 +37,9 @@ import java.util.Optional;
         SpeleothemBlock.class,
         SlabBlock.class,
         StairBlock.class,
-        WallBlock.class
+        WallBlock.class,
+        AmethystClusterBlock.class,
+        ChainBlock.class
 })
 @Implements(@Interface(iface = Fluidloggable.class, prefix = "fluidlogged$"))
 public abstract class CoreFluidloggedMixin extends Block implements OverlayState {
