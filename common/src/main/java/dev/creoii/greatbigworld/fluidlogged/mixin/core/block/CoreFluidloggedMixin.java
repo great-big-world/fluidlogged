@@ -35,7 +35,6 @@ import java.util.Optional;
 
         AnvilBlock.class,
         AbstractBedBlock.class,
-        ShulkerBoxBlock.class,
         BellBlock.class,
         CakeBlock.class,
         ComposterBlock.class,

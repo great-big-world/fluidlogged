@@ -24,7 +24,6 @@ import org.spongepowered.asm.mixin.injection.At;
         IronBarsBlock.class,
 
         AnvilBlock.class,
-        ShulkerBoxBlock.class,
         BellBlock.class,
         ComposterBlock.class,
         DaylightDetectorBlock.class,

@@ -35,7 +35,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
         AnvilBlock.class,
         BedBlock.class,
         StrawBedBlock.class,
-        ShulkerBoxBlock.class,
         BellBlock.class,
         CakeBlock.class,
         ComposterBlock.class,
