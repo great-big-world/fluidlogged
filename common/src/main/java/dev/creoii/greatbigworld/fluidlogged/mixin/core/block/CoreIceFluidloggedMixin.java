@@ -9,6 +9,8 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.*;
+import net.minecraft.world.level.block.piston.PistonBaseBlock;
+import net.minecraft.world.level.block.piston.PistonHeadBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
@@ -27,7 +29,41 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
         ChainBlock.class,
         RodBlock.class,
         CrossCollisionBlock.class,
-        FenceGateBlock.class
+        FenceGateBlock.class,
+        BrewingStandBlock.class,
+
+        AnvilBlock.class,
+        BedBlock.class,
+        StrawBedBlock.class,
+        ShulkerBoxBlock.class,
+        BellBlock.class,
+        CakeBlock.class,
+        ComposterBlock.class,
+        DaylightDetectorBlock.class,
+        TrapDoorBlock.class,
+        DoorBlock.class,
+        EndPortalFrameBlock.class,
+        GrindstoneBlock.class,
+        HopperBlock.class,
+        LecternBlock.class,
+        PistonBaseBlock.class,
+        PistonHeadBlock.class,
+        StonecutterBlock.class,
+        TurtleEggBlock.class,
+
+        LadderBlock.class,
+        ShelfBlock.class,
+        CampfireBlock.class,
+        DecoratedPotBlock.class,
+        ScaffoldingBlock.class,
+        SignBlock.class,
+        MultifaceBlock.class,
+        LanternBlock.class,
+        ChestBlock.class,
+        EnderChestBlock.class,
+        CopperGolemStatueBlock.class,
+        DragonEggBlock.class,
+        EnchantingTableBlock.class
 })
 public abstract class CoreIceFluidloggedMixin extends Block implements OverlayState {
     public CoreIceFluidloggedMixin(Properties properties) {

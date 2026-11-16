@@ -24,7 +24,19 @@ import org.spongepowered.asm.mixin.injection.At;
         ChainBlock.class,
         LightningRodBlock.class,
         FenceBlock.class,
-        IronBarsBlock.class
+        IronBarsBlock.class,
+        TrapDoorBlock.class,
+
+        ShelfBlock.class,
+        CampfireBlock.class,
+        DecoratedPotBlock.class,
+        ScaffoldingBlock.class,
+        SignBlock.class,
+        MultifaceBlock.class,
+        LanternBlock.class,
+        ChestBlock.class,
+        EnderChestBlock.class,
+        CopperGolemStatueBlock.class
 })
 public class CoreUpdateShapeFluidloggedMixin {
     @WrapOperation(method = "updateShape(Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/LevelReader;Lnet/minecraft/world/level/ScheduledTickAccess;Lnet/minecraft/core/BlockPos;Lnet/minecraft/core/Direction;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/util/RandomSource;)Lnet/minecraft/world/level/block/state/BlockState;", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/block/state/BlockState;getValue(Lnet/minecraft/world/level/block/state/properties/Property;)Ljava/lang/Comparable;", ordinal = 0))
