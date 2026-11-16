@@ -1,4 +1,4 @@
-package dev.creoii.greatbigworld.fluidlogged.mixin;
+package dev.creoii.greatbigworld.fluidlogged.mixin.item;
 
 import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.core.BlockPos;

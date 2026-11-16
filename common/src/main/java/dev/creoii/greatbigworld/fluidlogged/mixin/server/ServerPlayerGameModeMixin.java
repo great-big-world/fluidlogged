@@ -1,4 +1,4 @@
-package dev.creoii.greatbigworld.fluidlogged.mixin;
+package dev.creoii.greatbigworld.fluidlogged.mixin.server;
 
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
