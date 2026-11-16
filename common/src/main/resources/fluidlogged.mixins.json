@@ -82,6 +82,7 @@
     "level.BiomeMixin",
     "level.FoliagePlacerMixin",
     "level.GeodeFeatureMixin",
+    "level.OceanRuinPieceMixin",
     "level.PistonMovingBlockEntityMixin",
     "level.RootPlacerMixin",
     "level.ServerLevelMixin",
