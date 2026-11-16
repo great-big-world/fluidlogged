@@ -1,10 +1,11 @@
-package dev.creoii.greatbigworld.fluidlogged.mixin.item;
+package dev.creoii.greatbigworld.fluidlogged.neoforge.mixin;
 
 import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BucketItem;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
@@ -24,16 +25,16 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(BucketItem.class)
 public abstract class BucketItemMixin {
-    @Shadow @Final protected Fluid content;
+    @Shadow @Final public Fluid content;
     @Shadow protected abstract void playEmptySound(@Nullable LivingEntity user, LevelAccessor world, BlockPos pos);
 
-    @ModifyArg(method = "use", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/BucketItem;emptyContents(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/phys/BlockHitResult;)Z"))
+    @ModifyArg(method = "use", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/BucketItem;emptyContents(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/phys/BlockHitResult;Lnet/minecraft/world/item/ItemStack;)Z"))
     private BlockPos gbw$fixFluidloggingFilling(BlockPos pos, @Local(argsOnly = true, name = "level") Level world, @Local(argsOnly = true, name = "player") Player user, @Local(name = "clicked") BlockState clicked, @Local(name = "pos") BlockPos blockPos, @Local(name = "directionOffsetPos") BlockPos directionOffsetPos) {
         return clicked.getBlock() instanceof LiquidBlockContainer fluidFillable && fluidFillable.canPlaceLiquid(user, world, pos, clicked, content) ? blockPos : directionOffsetPos;
     }
 
-    @Inject(method = "emptyContents", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/Level;isClientSide()Z"), cancellable = true)
-    private void gbw$fixFluidloggingFilling(LivingEntity user, Level level, BlockPos pos, BlockHitResult hitResult, CallbackInfoReturnable<Boolean> cir, @Local(name = "flowingFluid") FlowingFluid flowableFluid, @Local(name = "block") Block block, @Local(name = "blockState") BlockState blockState) {
+    @Inject(method = "emptyContents(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/phys/BlockHitResult;Lnet/minecraft/world/item/ItemStack;)Z", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/Level;isClientSide()Z"), cancellable = true)
+    private void gbw$fixFluidloggingFilling(LivingEntity user, Level level, BlockPos pos, BlockHitResult hitResult, ItemStack containerItem, CallbackInfoReturnable<Boolean> cir, @Local(name = "flowingFluid") FlowingFluid flowableFluid, @Local(name = "block") Block block, @Local(name = "blockState") BlockState blockState) {
         if (block instanceof LiquidBlockContainer fluidFillable) {
             fluidFillable.placeLiquid(level, pos, blockState, flowableFluid.getSource(false));
             playEmptySound(user, level, pos);

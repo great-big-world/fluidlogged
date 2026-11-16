@@ -1,6 +1,6 @@
 package dev.creoii.greatbigworld.fluidlogged;
 
-import dev.architectury.platform.Platform;
+import dev.creoii.greatbigworld.fluidlogged.platform.FluidloggedPlatformUtil;
 import org.objectweb.asm.tree.ClassNode;
 import org.spongepowered.asm.mixin.extensibility.IMixinConfigPlugin;
 import org.spongepowered.asm.mixin.extensibility.IMixinInfo;
@@ -22,7 +22,7 @@ public class FluidloggedMixinPlugin implements IMixinConfigPlugin {
     @Override
     public boolean shouldApplyMixin(String targetClassName, String mixinClassName) {
         if ("dev.creoii.greatbigworld.fluidlogged.mixin.client.compat.sodium.ChunkBuilderMeshingTaskMixin".equals(mixinClassName)) {
-            return Platform.isModLoaded("sodium");
+            return FluidloggedPlatformUtil.isModLoaded("sodium");
         }
         return true;
     }

@@ -1,4 +1,4 @@
-package dev.creoii.greatbigworld.fluidlogged.mixin.block;
+package dev.creoii.greatbigworld.fluidlogged.neoforge.mixin;
 
 import dev.creoii.greatbigworld.fluidlogged.util.FluidType;
 import dev.creoii.greatbigworld.fluidlogged.util.Fluidloggable;
@@ -13,7 +13,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(SnowLayerBlock.class)
 public class SnowLayerBlockMixin {
-    @Inject(method = "canSurvive", at = @At(value = "RETURN", ordinal = 2), cancellable = true)
+    @Inject(method = "canSurvive", at = @At(value = "RETURN", ordinal = 1), cancellable = true)
     private void gbw$fixSnowLayersOnIceloggeds(BlockState state, LevelReader level, BlockPos pos, CallbackInfoReturnable<Boolean> cir) {
         BlockState belowState = level.getBlockState(pos.below());
         if (belowState.hasProperty(Fluidloggable.FLUIDLOGGED) && belowState.getValue(Fluidloggable.FLUIDLOGGED) == FluidType.ICE)

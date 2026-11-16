@@ -17,7 +17,8 @@
     ]
   },
   "mixins": [
-    "fluidlogged.mixins.json"
+    "fluidlogged.mixins.json",
+    "fluidlogged-fabric.mixins.json"
   ],
   "depends": {
     "fabricloader": ">=0.19.5",

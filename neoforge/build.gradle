@@ -46,9 +46,7 @@ dependencies {
     common(project(':fluidlogged:common')) { transitive false }
     shadowBundle(project(path: ':fluidlogged:common', configuration: 'transformProductionFabric')) { transitive false }
 
-    constraints {
-        implementation("io.github.llamalad7:mixinextras-neoforge:$rootProject.mixinextras_version")
-    }
+    implementation("io.github.llamalad7:mixinextras-neoforge:$rootProject.mixinextras_version")
 }
 
 processResources {
