@@ -12,7 +12,7 @@ description = '''
 Lavalogging & icelogging
 '''
 displayURL="https://greatbigworld.creoii.dev"
-#iconFile = ""
+iconFile = "src/main/resources/assets/fluidlogged/icon.png"
 
 [[dependencies.fluidlogged]]
 modId = "neoforge"
