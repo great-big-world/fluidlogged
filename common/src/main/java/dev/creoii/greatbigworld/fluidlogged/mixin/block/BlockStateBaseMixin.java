@@ -13,7 +13,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import java.util.function.ToIntFunction;
 
 @Mixin(BlockBehaviour.BlockStateBase.class)
-public abstract class AbstractBlockStateMixin {
+public abstract class BlockStateBaseMixin {
     @Shadow protected abstract BlockState asState();
 
     @WrapOperation(method = "<init>", at = @At(value = "INVOKE", target = "Ljava/util/function/ToIntFunction;applyAsInt(Ljava/lang/Object;)I"))
