@@ -12,8 +12,8 @@
     "client.SectionBuilderMixin"
   ],
   "mixins": [
-    "BucketItemMixin",
-    "ServerPlayerGameModeMixin",
+    "item.BucketItemMixin",
+    "server.ServerPlayerGameModeMixin",
     "block.AbstractBlockStateMixin",
     "block.BlockBehaviourMixin",
     "block.BlocksMixin",
