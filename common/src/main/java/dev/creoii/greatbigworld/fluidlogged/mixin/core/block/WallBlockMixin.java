@@ -6,20 +6,12 @@ import com.llamalad7.mixinextras.sugar.Local;
 import dev.creoii.greatbigworld.fluidlogged.util.FluidType;
 import dev.creoii.greatbigworld.fluidlogged.util.Fluidloggable;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
-import net.minecraft.server.level.ServerLevel;
-import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.level.LevelReader;
-import net.minecraft.world.level.ScheduledTickAccess;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.WallBlock;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.block.state.properties.Property;
-import net.minecraft.world.level.block.state.properties.WallSide;
 import net.minecraft.world.level.material.FlowingFluid;
-import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.level.pathfinder.PathComputationType;
@@ -63,18 +55,6 @@ public abstract class WallBlockMixin extends Block {
         return original.call(instance, Fluidloggable.FLUIDLOGGED, Fluidloggable.FLUIDS.get(replacedFluidState.getType()));
     }
 
-    @WrapOperation(method = "updateShape(Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/LevelReader;Lnet/minecraft/world/level/ScheduledTickAccess;Lnet/minecraft/core/BlockPos;Lnet/minecraft/core/Direction;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/util/RandomSource;)Lnet/minecraft/world/level/block/state/BlockState;", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/block/state/BlockState;getValue(Lnet/minecraft/world/level/block/state/properties/Property;)Ljava/lang/Comparable;", ordinal = 0))
-    private Comparable<?> gbw$fixFluidloggableStateForNeighborUpdate(BlockState instance, Property<?> property, Operation<Comparable<?>> original) {
-        return instance.getValue(Fluidloggable.FLUIDLOGGED) != FluidType.EMPTY;
-    }
-
-    @WrapOperation(method = "updateShape(Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/LevelReader;Lnet/minecraft/world/level/ScheduledTickAccess;Lnet/minecraft/core/BlockPos;Lnet/minecraft/core/Direction;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/util/RandomSource;)Lnet/minecraft/world/level/block/state/BlockState;", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/ScheduledTickAccess;scheduleTick(Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/material/Fluid;I)V", ordinal = 0))
-    private void gbw$fixFluidloggableScheduleTick(ScheduledTickAccess instance, BlockPos pos, Fluid type, int tickDelay, Operation<Void> original, @Local(argsOnly = true, name = "state") BlockState blockState, @Local(argsOnly = true, name = "level") LevelReader levelReader) {
-        FluidType fluidType = blockState.getValue(Fluidloggable.FLUIDLOGGED);
-        if (fluidType.isLiquid())
-            original.call(instance, pos, fluidType.getFluid(), fluidType.getFluid().getTickDelay(levelReader));
-    }
-
     @WrapOperation(method = "getFluidState", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/block/state/BlockState;getValue(Lnet/minecraft/world/level/block/state/properties/Property;)Ljava/lang/Comparable;", ordinal = 0))
     private Comparable<?> gbw$fixFluidloggableFluidState(BlockState instance, Property<?> property, Operation<Comparable<?>> original) {
         return instance.getValue(Fluidloggable.FLUIDLOGGED) == FluidType.WATER;
@@ -101,10 +81,5 @@ public abstract class WallBlockMixin extends Block {
         if (state.getValue(Fluidloggable.FLUIDLOGGED) == FluidType.EMPTY) {
             cir.setReturnValue(true);
         } else cir.setReturnValue(false);
-    }
-
-    @Override
-    protected void randomTick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
-        Fluidloggable.melt(state, level, pos);
     }
 }

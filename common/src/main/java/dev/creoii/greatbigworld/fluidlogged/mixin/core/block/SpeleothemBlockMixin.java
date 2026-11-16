@@ -8,6 +8,7 @@ import dev.creoii.greatbigworld.fluidlogged.util.Fluidloggable;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.level.*;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -19,6 +20,7 @@ import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.level.pathfinder.PathComputationType;
+import net.minecraft.world.phys.BlockHitResult;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -34,18 +36,6 @@ public abstract class SpeleothemBlockMixin extends Block {
     @WrapOperation(method = "getStateForPlacement", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/block/state/BlockState;setValue(Lnet/minecraft/world/level/block/state/properties/Property;Ljava/lang/Comparable;)Ljava/lang/Object;", ordinal = 2))
     private Object gbw$fixFluidloggablePlacementState(BlockState instance, Property<?> property, Comparable<?> comparable, Operation<Object> original, @Local(name = "level") LevelAccessor level, @Local(name = "pos") BlockPos pos) {
         return original.call(instance, Fluidloggable.FLUIDLOGGED, Fluidloggable.FLUIDS.get(level.getFluidState(pos).getType()));
-    }
-
-    @WrapOperation(method = "updateShape", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/block/state/BlockState;getValue(Lnet/minecraft/world/level/block/state/properties/Property;)Ljava/lang/Comparable;", ordinal = 0))
-    private Comparable<?> gbw$fixFluidloggableStateForNeighborUpdate(BlockState instance, Property<?> property, Operation<Comparable<?>> original) {
-        return instance.getValue(Fluidloggable.FLUIDLOGGED) != FluidType.EMPTY;
-    }
-
-    @WrapOperation(method = "updateShape", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/ScheduledTickAccess;scheduleTick(Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/material/Fluid;I)V", ordinal = 0))
-    private void gbw$fixFluidloggableScheduleTick(ScheduledTickAccess instance, BlockPos pos, Fluid type, int tickDelay, Operation<Void> original, @Local(argsOnly = true, name = "state") BlockState blockState, @Local(argsOnly = true, name = "level") LevelReader levelReader) {
-        FluidType fluidType = blockState.getValue(Fluidloggable.FLUIDLOGGED);
-        if (fluidType.isLiquid())
-            original.call(instance, pos, fluidType.getFluid(), fluidType.getFluid().getTickDelay(levelReader));
     }
 
     @WrapOperation(method = "getFluidState", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/block/state/BlockState;getValue(Lnet/minecraft/world/level/block/state/properties/Property;)Ljava/lang/Comparable;"))
@@ -96,5 +86,12 @@ public abstract class SpeleothemBlockMixin extends Block {
     @WrapOperation(method = "isFreeHangingStalactite", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/block/state/BlockState;getValue(Lnet/minecraft/world/level/block/state/properties/Property;)Ljava/lang/Comparable;", ordinal = 1))
     private static Comparable<?> gbw$fixFreeHangingStalactite(BlockState instance, Property<?> property, Operation<Comparable<?>> original) {
         return original.call(instance, Fluidloggable.FLUIDLOGGED) == FluidType.EMPTY;
+    }
+
+    @Inject(method = "onProjectileHit", at = @At("HEAD"), cancellable = true)
+    private void gbw$fixProjectileHit(Level level, BlockState state, BlockHitResult blockHit, Projectile projectile, CallbackInfo ci) {
+        if (state.getValue(Fluidloggable.FLUIDLOGGED) == FluidType.ICE) {
+            ci.cancel();
+        }
     }
 }
