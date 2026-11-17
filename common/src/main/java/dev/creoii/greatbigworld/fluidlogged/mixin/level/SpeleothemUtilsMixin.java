@@ -10,6 +10,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.SpeleothemBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.SpeleothemUtils;
 import org.spongepowered.asm.mixin.Mixin;
@@ -30,7 +31,7 @@ public abstract class SpeleothemUtilsMixin {
     @WrapOperation(method = "growSpeleothem", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/levelgen/feature/SpeleothemUtils;buildBaseToTipColumn(Lnet/minecraft/core/Direction;IZLjava/util/function/Consumer;Lnet/minecraft/world/level/block/Block;)V"))
     private static void gbw$generateFluidloggedPointedDripstone(Direction direction, int totalLength, boolean mergedTip, Consumer<BlockState> consumer, Block pointedBlock, Operation<Void> original, @Local(argsOnly = true, name = "level") LevelAccessor level, @Local(name = "pos") BlockPos.MutableBlockPos mutable) {
         buildBaseToTipColumn(direction, totalLength, mergedTip, state -> {
-            if (state.is(Blocks.POINTED_DRIPSTONE)) {
+            if (state.getBlock() instanceof SpeleothemBlock) {
                 if (level.getBlockState(mutable).is(Blocks.ICE)) {
                     state = state.setValue(Fluidloggable.FLUIDLOGGED, FluidType.ICE);
                 } else state = state.setValue(Fluidloggable.FLUIDLOGGED, Fluidloggable.FLUIDS.get(level.getFluidState(mutable).getType()));
