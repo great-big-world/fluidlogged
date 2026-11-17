@@ -23,6 +23,7 @@
     "block.FireBlockMixin",
     "block.IceBlockMixin",
     "block.LilyPadBlockMixin",
+    "block.PointedDripstoneBlockMixin",
     "block.state.StateHolderMixin",
     "compat.wilderwild.StoneChestBlockEntityMixin",
     "core.block.AbstractBedBlockMixin",

@@ -26,6 +26,9 @@ public class FluidloggedFabricMixinPlugin implements IMixinConfigPlugin {
         if ("dev.creoii.greatbigworld.fluidlogged.fabric.mixin.compat.farmersdelight.RopeFenceBlockMixin".equals(mixinClassName)) {
             return FluidloggedPlatformUtil.isModLoaded("farmersdelight");
         }
+        if ("dev.creoii.greatbigworld.fluidlogged.fabric.mixin.compat.earthandwater.PointedDarkDripstoneBlockMixin".equals(mixinClassName)) {
+            return FluidloggedPlatformUtil.isModLoaded("earth-and-water");
+        }
         return true;
     }
 

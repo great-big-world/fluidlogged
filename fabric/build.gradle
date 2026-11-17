@@ -55,6 +55,7 @@ dependencies {
     common(project(':fluidlogged:common')) { transitive false }
     shadowBundle project(path: ':fluidlogged:common', configuration: 'transformProductionFabric')
     compileOnly "maven.modrinth:7vxePowz:$rootProject.farmers_delight_refabricated_version" // Farmer's Delight Refabricated
+    compileOnly "maven.modrinth:earth-and-water:$rootProject.earth_and_water_version"
 }
 
 processResources {

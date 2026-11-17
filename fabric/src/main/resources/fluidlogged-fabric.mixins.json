@@ -12,6 +12,7 @@
     "LivingEntityMixin",
     "PlayerMixin",
     "SnowLayerBlockMixin",
+    "compat.earthandwater.PointedDarkDripstoneBlockMixin",
     "compat.farmersdelight.RopeBlockMixin",
     "compat.farmersdelight.RopeFenceBlockMixin"
   ],
