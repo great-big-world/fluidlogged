@@ -9,6 +9,7 @@
   },
   "client": [
     "client.LevelEventHandlerMixin",
+    "client.LevelExtractorMixin",
     "client.compat.sodium.ChunkBuilderMeshingTaskMixin"
   ],
   "mixins": [
@@ -23,8 +24,7 @@
     "block.IceBlockMixin",
     "block.LilyPadBlockMixin",
     "block.StateHolderMixin",
-    "compat.farmersdelight.RopeBlockMixin",
-    "compat.farmersdelight.RopeFenceBlockMixin",
+    "compat.wilderwild.StoneChestBlockEntityMixin",
     "core.block.AbstractBedBlockMixin",
     "core.block.AmethystClusterBlockMixin",
     "core.block.AnvilBlockMixin",

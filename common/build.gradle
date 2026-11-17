@@ -25,4 +25,6 @@ dependencies {
     implementation "dev.architectury:architectury:$rootProject.architectury_api_version"
 
     compileOnly "maven.modrinth:sodium:$rootProject.sodium_version"
+    compileOnly "maven.modrinth:wilder-wild:$rootProject.wilder_wild_version-fabric"
+    compileOnly "maven.modrinth:ecologics:vt145UCJ"
 }

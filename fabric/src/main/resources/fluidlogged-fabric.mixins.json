@@ -11,7 +11,9 @@
     "BucketItemMixin",
     "LivingEntityMixin",
     "PlayerMixin",
-    "SnowLayerBlockMixin"
+    "SnowLayerBlockMixin",
+    "compat.farmersdelight.RopeBlockMixin",
+    "compat.farmersdelight.RopeFenceBlockMixin"
   ],
   "injectors": {
     "defaultRequire": 1

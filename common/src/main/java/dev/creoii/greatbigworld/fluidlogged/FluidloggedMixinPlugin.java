@@ -23,6 +23,9 @@ public class FluidloggedMixinPlugin implements IMixinConfigPlugin {
         if ("dev.creoii.greatbigworld.fluidlogged.mixin.client.compat.sodium.ChunkBuilderMeshingTaskMixin".equals(mixinClassName)) {
             return FluidloggedPlatformUtil.isModLoaded("sodium");
         }
+        if ("dev.creoii.greatbigworld.fluidlogged.mixin.compat.wilderwild.StoneChestBlockEntityMixin".equals(mixinClassName)) {
+            return FluidloggedPlatformUtil.isModLoaded("wilderwild");
+        }
         return true;
     }
 
