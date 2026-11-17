@@ -6,13 +6,17 @@ import com.llamalad7.mixinextras.sugar.Local;
 import dev.creoii.greatbigworld.fluidlogged.util.FluidType;
 import dev.creoii.greatbigworld.fluidlogged.util.Fluidloggable;
 import net.minecraft.core.BlockPos;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.CampfireBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.Property;
@@ -21,14 +25,21 @@ import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.level.pathfinder.PathComputationType;
 import net.minecraft.world.phys.BlockHitResult;
+import org.jspecify.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(CampfireBlock.class)
-public class CampfireBlockMixin {
+public class CampfireBlockMixin implements Fluidloggable {
+    @Shadow
+    public static void douse(@Nullable Entity source, LevelAccessor level, BlockPos pos, BlockState state) {
+        throw new UnsupportedOperationException("Implemented via mixin");
+    }
+
     @WrapOperation(method = "getStateForPlacement", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/block/state/BlockState;setValue(Lnet/minecraft/world/level/block/state/properties/Property;Ljava/lang/Comparable;)Ljava/lang/Object;", ordinal = 0))
     private Object gbw$fixFluidloggablePlacementState(BlockState instance, Property<?> property, Comparable<?> comparable, Operation<Object> original, @Local(argsOnly = true, name = "context") BlockPlaceContext context) {
         return original.call(instance, Fluidloggable.FLUIDLOGGED, Fluidloggable.FLUIDS.get(context.getLevel().getFluidState(context.getClickedPos()).getType()));
@@ -69,10 +80,23 @@ public class CampfireBlockMixin {
         }
     }
 
-    @Inject(method = "canLight", at = @At("HEAD"), cancellable = true)
-    private static void gbw$fixCanLight(BlockState state, CallbackInfoReturnable<Boolean> cir) {
-        if (state.getValue(Fluidloggable.FLUIDLOGGED) == FluidType.ICE) {
-            cir.setReturnValue(false);
+    @Override
+    public boolean placeLiquid(final LevelAccessor level, final BlockPos pos, final BlockState state, final FluidState fluidState) {
+        if (state.getValue(Fluidloggable.FLUIDLOGGED) == FluidType.EMPTY) {
+            boolean isLit = state.getValue(CampfireBlock.LIT);
+            if (isLit) {
+                if (!level.isClientSide()) {
+                    level.playSound(null, pos, SoundEvents.GENERIC_EXTINGUISH_FIRE, SoundSource.BLOCKS, 1.0F, 1.0F);
+                }
+
+                douse(null, level, pos, state);
+            }
+
+            level.setBlockAndUpdate(pos, state.setValue(Fluidloggable.FLUIDLOGGED, FLUIDS.get(fluidState.getType())).setValue(CampfireBlock.LIT, false));
+            level.scheduleTick(pos, fluidState.getType(), fluidState.getType().getTickDelay(level));
+            return true;
+        } else {
+            return false;
         }
     }
 }

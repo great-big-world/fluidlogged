@@ -1,4 +1,4 @@
-package dev.creoii.greatbigworld.fluidlogged.mixin.block;
+package dev.creoii.greatbigworld.fluidlogged.mixin.block.state;
 
 import dev.creoii.greatbigworld.fluidlogged.util.FluidType;
 import dev.creoii.greatbigworld.fluidlogged.util.Fluidloggable;
