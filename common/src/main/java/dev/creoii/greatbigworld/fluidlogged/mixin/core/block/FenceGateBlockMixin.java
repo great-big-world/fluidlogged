@@ -21,6 +21,9 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.WoodType;
+import net.minecraft.world.level.material.FlowingFluid;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.level.pathfinder.PathComputationType;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
@@ -105,5 +108,14 @@ public abstract class FenceGateBlockMixin extends HorizontalDirectionalBlock {
         if (state.getValue(Fluidloggable.FLUIDLOGGED) == FluidType.ICE) {
             cir.setReturnValue(InteractionResult.PASS);
         }
+    }
+
+    @Override
+    protected FluidState getFluidState(BlockState state) {
+        FluidType fluidType = state.getValue(Fluidloggable.FLUIDLOGGED);
+        if (fluidType.isLiquid() && fluidType.getFluid() instanceof FlowingFluid flowableFluid) {
+            return flowableFluid.getSource(false);
+        }
+        return Fluids.EMPTY.defaultFluidState();
     }
 }

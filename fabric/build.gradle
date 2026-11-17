@@ -7,6 +7,20 @@ architectury {
     fabric()
 }
 
+repositories {
+    exclusiveContent {
+        forRepository {
+            maven {
+                name = "Modrinth"
+                url = "https://api.modrinth.com/maven"
+            }
+        }
+        filter {
+            includeGroup "maven.modrinth"
+        }
+    }
+}
+
 version = "$project.mod_version+$project.minecraft_version"
 
 base {
@@ -40,6 +54,7 @@ dependencies {
 
     common(project(':fluidlogged:common')) { transitive false }
     shadowBundle project(path: ':fluidlogged:common', configuration: 'transformProductionFabric')
+    compileOnly "maven.modrinth:7vxePowz:$rootProject.farmers_delight_refabricated_version" // Farmer's Delight Refabricated
 }
 
 processResources {
