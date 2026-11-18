@@ -13,6 +13,7 @@
     "client.compat.sodium.ChunkBuilderMeshingTaskMixin"
   ],
   "mixins": [
+    "DataFixersMixin",
     "block.BlockBehaviourMixin",
     "block.BlocksMixin",
     "block.BlockStateBaseMixin",
