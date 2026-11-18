@@ -27,4 +27,5 @@ dependencies {
     compileOnly "maven.modrinth:sodium:$rootProject.sodium_version"
     compileOnly "maven.modrinth:wilder-wild:$rootProject.wilder_wild_version-fabric"
     compileOnly "maven.modrinth:ecologics:vt145UCJ"
+    compileOnly "maven.modrinth:hollow-logs-creoii:xGtVu1so"
 }
