@@ -15,8 +15,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.FluidState;
 import org.jetbrains.annotations.Nullable;
-import org.spongepowered.asm.mixin.Implements;
-import org.spongepowered.asm.mixin.Interface;
 import org.spongepowered.asm.mixin.Mixin;
 
 import java.util.Optional;
@@ -52,7 +50,6 @@ import java.util.Optional;
 
         LadderBlock.class,
         ShelfBlock.class,
-        CampfireBlock.class,
         DecoratedPotBlock.class,
         ScaffoldingBlock.class,
         SignBlock.class,
@@ -63,8 +60,7 @@ import java.util.Optional;
         DragonEggBlock.class,
         EnchantingTableBlock.class
 })
-@Implements(@Interface(iface = Fluidloggable.class, prefix = "fluidlogged$"))
-public abstract class CoreFluidloggedMixin implements OverlayState {
+public abstract class CoreFluidloggedMixin implements Fluidloggable, OverlayState {
     public boolean canPlaceLiquid(@Nullable LivingEntity filler, BlockGetter world, BlockPos pos, BlockState state, Fluid fluid) {
         return Fluidloggable.defaultCanPlaceLiquid(state);
     }

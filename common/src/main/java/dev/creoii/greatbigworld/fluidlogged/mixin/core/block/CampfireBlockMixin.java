@@ -6,21 +6,25 @@ import com.llamalad7.mixinextras.sugar.Local;
 import dev.creoii.greatbigworld.fluidlogged.util.FluidType;
 import dev.creoii.greatbigworld.fluidlogged.util.Fluidloggable;
 import net.minecraft.core.BlockPos;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.CampfireBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraft.world.level.material.FlowingFluid;
+import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.level.pathfinder.PathComputationType;
@@ -32,6 +36,8 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+
+import java.util.Optional;
 
 @Mixin(CampfireBlock.class)
 public class CampfireBlockMixin implements Fluidloggable {
@@ -80,6 +86,10 @@ public class CampfireBlockMixin implements Fluidloggable {
         }
     }
 
+    public boolean canPlaceLiquid(@org.jetbrains.annotations.Nullable LivingEntity filler, BlockGetter world, BlockPos pos, BlockState state, Fluid fluid) {
+        return Fluidloggable.defaultCanPlaceLiquid(state);
+    }
+
     @Override
     public boolean placeLiquid(final LevelAccessor level, final BlockPos pos, final BlockState state, final FluidState fluidState) {
         if (state.getValue(Fluidloggable.FLUIDLOGGED) == FluidType.EMPTY) {
@@ -98,5 +108,13 @@ public class CampfireBlockMixin implements Fluidloggable {
         } else {
             return false;
         }
+    }
+
+    public ItemStack pickupBlock(@org.jetbrains.annotations.Nullable LivingEntity drainer, LevelAccessor world, BlockPos pos, BlockState state) {
+        return Fluidloggable.defaultPickupBlock(world, pos, state);
+    }
+
+    public Optional<SoundEvent> getPickupSound() {
+        return Fluidloggable.defaultGetPickupSound();
     }
 }
