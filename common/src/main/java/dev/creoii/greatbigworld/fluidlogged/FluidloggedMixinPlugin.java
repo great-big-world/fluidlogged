@@ -26,6 +26,9 @@ public class FluidloggedMixinPlugin implements IMixinConfigPlugin {
         if ("dev.creoii.greatbigworld.fluidlogged.mixin.compat.wilderwild.StoneChestBlockEntityMixin".equals(mixinClassName)) {
             return FluidloggedPlatformUtil.isModLoaded("wilderwild");
         }
+        if ("dev.creoii.greatbigworld.fluidlogged.mixin.compat.wilderwild.HollowedLogBlockMixin".equals(mixinClassName)) {
+            return FluidloggedPlatformUtil.isModLoaded("wilderwild");
+        }
         if ("dev.creoii.greatbigworld.fluidlogged.mixin.compat.hollowlogs.HollowLogBlockMixin".equals(mixinClassName)) {
             return FluidloggedPlatformUtil.isModLoaded("hollow_logs");
         }
