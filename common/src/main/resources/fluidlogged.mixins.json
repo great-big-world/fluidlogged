@@ -26,6 +26,7 @@
     "block.PointedDripstoneBlockMixin",
     "block.state.StateHolderMixin",
     "compat.hollowlogs.HollowLogBlockMixin",
+    "compat.wilderwild.HollowedLogBlockMixin",
     "compat.wilderwild.StoneChestBlockEntityMixin",
     "core.block.AbstractBedBlockMixin",
     "core.block.AmethystClusterBlockMixin",
